@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "backend/proto/.";
+
+package chat;
+
+service MessageStore {
+  rpc StoreMessage (Message) returns (google.protobuf.Empty) {}
+  rpc RetrieveMessages (google.protobuf.Empty) returns (Messages) {}
+}
+
+message Message {
+  int32 client_id = 1;
+  string client_name = 2;
+  google.protobuf.Timestamp time = 3;
+  string content = 4;
+}
+
+message Messages {
+  repeated Message stored_messages = 1;
+}
